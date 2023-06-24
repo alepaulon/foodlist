@@ -115,19 +115,16 @@ const ComidaForm = () => {
   return (
     <div>
       <div>
-        <div className="flex flex-row justify-around mx-64">
+        <div className="flex flex-row justify-around">
           <form
             onSubmit={handleAgregarComida}
             className="flex flex-col items-center"
           >
             <h2 className="text-[#abd1c6] font-medium text-xl">
-              Agregar Comida:
+              Comida nueva:
             </h2>
-            <label className="text-[#e8e4e6] " htmlFor="nombre">
-              Nombre:
-            </label>
             <input
-              className="rounded-full"
+              className="rounded-full p-2 m-2 mt-4"
               type="text"
               id="nombre"
               value={nombre}
@@ -137,13 +134,13 @@ const ComidaForm = () => {
             {ingredientes.map((ingrediente, index) => (
               <div className="flex flex-col items-center" key={index}>
                 <label
-                  className="text-[#e8e4e6] "
+                  className="text-[#e8e4e6] p-2"
                   htmlFor={`ingrediente-${index}`}
                 >
                   Ingrediente {index + 1}:
                 </label>
                 <input
-                  className="rounded-full"
+                  className="rounded-full p-2 m-2"
                   type="text"
                   id={`ingrediente-${index}`}
                   value={ingrediente}
@@ -152,7 +149,7 @@ const ComidaForm = () => {
                 />
                 {index > 0 && (
                   <button
-                    className="bg-[#f9bc60] text-[#001e1d] rounded-full"
+                    className="bg-[#e16162] text-[#001e1d] rounded-full px-2 m-2"
                     type="button"
                     onClick={() => handleEliminarIngrediente(index)}
                   >
@@ -162,7 +159,7 @@ const ComidaForm = () => {
               </div>
             ))}
             <button
-              className="bg-[#f9bc60] text-[#001e1d] rounded-full"
+              className="bg-[#f9bc60] text-[#001e1d] rounded-full px-2 m-2"
               type="button"
               onClick={handleAgregarIngrediente}
             >
@@ -170,7 +167,7 @@ const ComidaForm = () => {
             </button>
 
             <button
-              className="bg-[#f9bc60] text-[#001e1d] rounded-full"
+              className="bg-[#f9bc60] text-[#001e1d] rounded-full px-2 m-2"
               type="submit"
             >
               Agregar Comida
@@ -178,14 +175,14 @@ const ComidaForm = () => {
           </form>
           <div className="flex flex-col items-center">
             <h2 className="text-[#abd1c6] font-medium text-xl">
-              Agregar Ingrediente:
+              Ingrediente nuevo:
             </h2>
             <form
               onSubmit={handleAgregarIngredienteDisponible}
               className="flex flex-col"
             >
               <input
-                className="rounded-full"
+                className="rounded-full p-2 m-2 mt-4"
                 type="text"
                 id="nombreIngrediente"
                 value={nombre}
@@ -193,7 +190,7 @@ const ComidaForm = () => {
                 required
               />
               <button
-                className="bg-[#f9bc60] text-[#001e1d] rounded-full"
+                className="bg-[#f9bc60] text-[#001e1d] rounded-full px-2 m-2"
                 type="submit"
               >
                 Agregar Ingrediente
@@ -201,25 +198,8 @@ const ComidaForm = () => {
             </form>
           </div>
         </div>
-        <div className="flex flex-row justify-around mx-64 mt-10">
-          <div className="flex flex-col items-center">
-            <h2 className="text-[#e8e4e6] ">Ingredientes Disponibles:</h2>
-            <ul>
-              {ingredientesDisponibles.map((ingrediente, index) => (
-                <li key={index}>
-                  {ingrediente}{" "}
-                  <button
-                    className="bg-[#f9bc60] text-[#001e1d] rounded-full"
-                    type="button"
-                    onClick={() => handleEliminarIngredienteDisponible(index)}
-                  >
-                    Eliminar
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="flex flex-col items-center">
+        <div className="flex flex-row justify-around mt-10">
+        <div className="flex flex-col items-center">
             <h2 className="text-[#e8e4e6] ">Comidas:</h2>
             <ul>
               {comidas.map((comida, index) => (
@@ -228,7 +208,7 @@ const ComidaForm = () => {
                   {comida.ingredientes.join(", ")} - Disponible:{" "}
                   {comida.disponible ? "Sí" : "No"}
                   <button
-                    className="bg-[#f9bc60] text-[#001e1d] rounded-full"
+                    className="bg-[#f9bc60] text-[#001e1d] rounded-full px-2 m-2"
                     type="button"
                     onClick={handleEliminarComida}
                   >
@@ -239,6 +219,23 @@ const ComidaForm = () => {
             </ul>
 
             {error && <p>{error}</p>}
+          </div>
+          <div className="flex flex-col items-center">
+            <h2 className="text-[#e8e4e6] ">Ingredientes Disponibles:</h2>
+            <ul>
+              {ingredientesDisponibles.map((ingrediente, index) => (
+                <li key={index}>
+                  {ingrediente}{" "}
+                  <button
+                    className="bg-[#f9bc60] text-[#001e1d] rounded-full px-2 m-2"
+                    type="button"
+                    onClick={() => handleEliminarIngredienteDisponible(index)}
+                  >
+                    Eliminar
+                  </button>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>
