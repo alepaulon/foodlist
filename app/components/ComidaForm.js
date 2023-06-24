@@ -7,6 +7,7 @@ const ComidaForm = () => {
   const [ingredientes, setIngredientes] = useState([""]);
   const [ingredientesDisponibles, setIngredientesDisponibles] = useState([]);
   const [comidas, setComidas] = useState([]);
+  const [comidasGuardadas, setComidasGuardadas] = useState([]);
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -15,11 +16,6 @@ const ComidaForm = () => {
     );
     if (ingredientesDisponiblesGuardados) {
       setIngredientesDisponibles(ingredientesDisponiblesGuardados);
-    }
-
-    const comidasGuardadas = JSON.parse(localStorage.getItem("comidas"));
-    if (comidasGuardadas) {
-      setComidas(comidasGuardadas);
     }
   }, []);
 
@@ -32,8 +28,16 @@ const ComidaForm = () => {
   }, [ingredientesDisponibles]);
 
   useEffect(() => {
-    localStorage.setItem("comidas", JSON.stringify(comidas));
-  }, [comidas]);
+    const comidasGuardadas = JSON.parse(localStorage.getItem('comidas'));
+    if (comidasGuardadas) {
+      setComidas(comidasGuardadas);
+      setComidasGuardadas(comidasGuardadas);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('comidas', JSON.stringify(comidasGuardadas));
+  }, [comidasGuardadas]);
 
   const handleNombreChange = (event) => {
     setNombre(event.target.value);
@@ -87,23 +91,25 @@ const ComidaForm = () => {
     setComidas(comidasDisponibles);
   };
 
-  const handleAgregarComida = (event) => {
-    event.preventDefault();
-
+  const handleAgregarComida = () => {
     const nuevaComida = {
-      nombre,
-      ingredientes,
+      nombre: nombre,
+      ingredientes: ingredientes,
     };
 
-    setComidas([...comidas, nuevaComida]);
-    setNombre("");
-    setIngredientes([""]);
+    const nuevasComidasGuardadas = [...comidasGuardadas, nuevaComida];
+    setComidas(nuevasComidasGuardadas);
+    setComidasGuardadas(nuevasComidasGuardadas);
+
+    setNombre('');
+    setIngredientes(['']);
   };
 
   const handleEliminarComida = (index) => {
-    const nuevasComidas = [...comidas];
-    nuevasComidas.splice(index, 1);
-    setComidas(nuevasComidas);
+    const nuevasComidasGuardadas = [...comidasGuardadas];
+    nuevasComidasGuardadas.splice(index, 1);
+    setComidas(nuevasComidasGuardadas);
+    setComidasGuardadas(nuevasComidasGuardadas);
   };
 
   return (
@@ -224,7 +230,7 @@ const ComidaForm = () => {
                   <button
                     className="bg-[#f9bc60] text-[#001e1d] rounded-full"
                     type="button"
-                    onClick={() => handleEliminarComida(index)}
+                    onClick={handleEliminarComida}
                   >
                     Eliminar Comida
                   </button>
