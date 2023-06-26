@@ -1,4 +1,5 @@
-"use client";
+'use client'
+
 
 import React, { useState, useEffect } from "react";
 
@@ -9,6 +10,7 @@ const ComidaForm = () => {
   const [comidas, setComidas] = useState([]);
   const [comidasGuardadas, setComidasGuardadas] = useState([]);
   const [error, setError] = useState("");
+  const [nombreIngrediente, setNombreIngrediente] = useState("");
 
   useEffect(() => {
     const ingredientesDisponiblesGuardados = JSON.parse(
@@ -61,9 +63,9 @@ const ComidaForm = () => {
 
   const handleAgregarIngredienteDisponible = (event) => {
     event.preventDefault();
-    if (!ingredientesDisponibles.includes(nombre)) {
-      setIngredientesDisponibles([...ingredientesDisponibles, nombre]);
-      setNombre("");
+    if (!ingredientesDisponibles.includes(nombreIngrediente)) {
+      setIngredientesDisponibles([...ingredientesDisponibles, nombreIngrediente]);
+      setNombreIngrediente("");
     }
   };
 
@@ -185,8 +187,8 @@ const ComidaForm = () => {
                 className="rounded-full p-2 m-2 mt-4"
                 type="text"
                 id="nombreIngrediente"
-                value={nombre}
-                onChange={(event) => setNombre(event.target.value)}
+                value={nombreIngrediente}
+                onChange={(event) => setNombreIngrediente(event.target.value)}
                 required
               />
               <button
@@ -199,18 +201,18 @@ const ComidaForm = () => {
           </div>
         </div>
         <div className="flex flex-row justify-around mt-10">
-        <div className="flex flex-col items-center">
-            <h2 className="text-[#e8e4e6] ">Comidas:</h2>
+        <div className="flex flex-col max-w-xs">
+            <h2 className="text-[#e8e4e6] text-lg font-medium pb-2">Comidas:</h2>
             <ul>
               {comidas.map((comida, index) => (
                 <li key={index} className="text-[#e8e4e6] ">
                   {comida.nombre} - Ingredientes:{" "}
                   {comida.ingredientes.join(", ")} - Disponible:{" "}
-                  {comida.disponible ? "Sí" : "No"}
+                  {comida.disponible ? "✔" : "✘"}
                   <button
-                    className="bg-[#f9bc60] text-[#001e1d] rounded-full px-2 m-2"
+                    className="bg-[#e16162] text-[#001e1d] rounded-full px-2 m-2"
                     type="button"
-                    onClick={handleEliminarComida}
+                    onClick={() => handleEliminarComida(index)}
                   >
                     Eliminar Comida
                   </button>
@@ -220,14 +222,16 @@ const ComidaForm = () => {
 
             {error && <p>{error}</p>}
           </div>
-          <div className="flex flex-col items-center">
-            <h2 className="text-[#e8e4e6] ">Ingredientes Disponibles:</h2>
+          <div className="flex flex-col mr-10 text-right">
+            <h2 className="text-[#e8e4e6] text-lg font-medium pb-2">Ingredientes Disponibles:</h2>
             <ul>
               {ingredientesDisponibles.map((ingrediente, index) => (
-                <li key={index}>
+                <li key={index}
+                    className="text-[#e8e4e6]"
+                >
                   {ingrediente}{" "}
                   <button
-                    className="bg-[#f9bc60] text-[#001e1d] rounded-full px-2 m-2"
+                    className="bg-[#e16162] text-[#001e1d] rounded-full px-2 m-2"
                     type="button"
                     onClick={() => handleEliminarIngredienteDisponible(index)}
                   >
